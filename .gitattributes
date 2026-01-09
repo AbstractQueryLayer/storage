@@ -16,6 +16,5 @@
 /ISSUE_TEMPLATE.md           export-ignore
 /phpcs.xml.dist              export-ignore
 /phpunit.xml.dist            export-ignore
-/tests                       export-ignore
 /docs                        export-ignore
 /examples                    export-ignore
