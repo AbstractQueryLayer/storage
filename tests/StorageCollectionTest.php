@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace IfCastle\AQL\Storage;
 
-use IfCastle\AQL\TestCases\TestCaseWithDiContainer;
+use IfCastle\AQL\Storage\BaseTestCase;
 
-class StorageCollectionTest extends TestCaseWithDiContainer
+class StorageCollectionTest extends BaseTestCase
 {
     public function testFindStorage(): void
     {

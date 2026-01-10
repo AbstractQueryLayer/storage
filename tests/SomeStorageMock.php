@@ -5,17 +5,12 @@ declare(strict_types=1);
 namespace IfCastle\AQL\Storage;
 
 use IfCastle\AQL\Dsl\BasicQueryInterface;
-use IfCastle\AQL\Entity\EntityInterface;
-use IfCastle\AQL\Executor\InsertUpdateResult;
-use IfCastle\AQL\Executor\QueryExecutorDummy;
-use IfCastle\AQL\Executor\QueryExecutorInterface;
-use IfCastle\AQL\Executor\QueryExecutorResolverInterface;
 use IfCastle\AQL\Result\ResultFetched;
 use IfCastle\AQL\Result\ResultInterface;
 use IfCastle\AQL\Storage\Exceptions\StorageException;
 use IfCastle\Exceptions\LogicalException;
 
-class SomeStorageMock implements StorageInterface, AqlStorageInterface, QueryExecutorResolverInterface
+class SomeStorageMock implements StorageInterface, AqlStorageInterface
 {
     public const string NAME        = 'some_storage_name';
 
@@ -86,26 +81,16 @@ class SomeStorageMock implements StorageInterface, AqlStorageInterface, QueryExe
             }
 
             if (\is_scalar($this->queryResults[$aql])) {
-                $result             = new ResultFetched([]);
-                $result->setInsertUpdateResult(new InsertUpdateResult(lastInsertedId: $this->queryResults[$aql]));
+                return new ResultFetched([]);
             } elseif ($this->queryResults[$aql] instanceof \DateTimeImmutable) {
-                $result             = new ResultFetched([]);
-                $result->setInsertUpdateResult(new InsertUpdateResult(lastDateTime: $this->queryResults[$aql]));
+                return new ResultFetched([]);
             } elseif ($this->queryResults[$aql] instanceof StorageException) {
                 throw $this->queryResults[$aql];
             } else {
                 throw new \TypeError('Invalid result type: ' . \get_debug_type($this->queryResults[$aql]));
             }
-
-            return $this->queryResults[$aql];
         }
 
         return new ResultFetched([]);
-    }
-
-    #[\Override]
-    public function resolveQueryExecutor(BasicQueryInterface $basicQuery, ?EntityInterface $entity = null): ?QueryExecutorInterface
-    {
-        return new QueryExecutorDummy();
     }
 }

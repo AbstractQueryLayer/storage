@@ -25,13 +25,13 @@
   "autoload": {
     "psr-4": {
       "IfCastle\\AQL\\Storage\\": [
-        "src/",
-        "tests/"
+        "src/"
       ]
     }
   },
   "autoload-dev": {
     "psr-4": {
+      "IfCastle\\AQL\\Storage\\": "tests/"
     }
   },
   "require-dev": {

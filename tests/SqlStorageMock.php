@@ -5,15 +5,11 @@ declare(strict_types=1);
 namespace IfCastle\AQL\Storage;
 
 use IfCastle\AQL\Dsl\BasicQueryInterface;
-use IfCastle\AQL\Entity\EntityInterface;
-use IfCastle\AQL\Executor\InsertUpdateResult;
-use IfCastle\AQL\Executor\QueryExecutorInterface;
-use IfCastle\AQL\Executor\QueryExecutorResolverInterface;
 use IfCastle\AQL\Result\ResultFetched;
 use IfCastle\AQL\Result\ResultInterface;
 use IfCastle\AQL\Storage\Exceptions\StorageException;
 
-class SqlStorageMock implements SqlStorageInterface, QueryExecutorResolverInterface
+class SqlStorageMock implements SqlStorageInterface
 {
     public string|int|float|null $lastInsertId = null;
 
@@ -28,8 +24,6 @@ class SqlStorageMock implements SqlStorageInterface, QueryExecutorResolverInterf
     public array $queryResults      = [];
 
     public ?StorageException $lastError = null;
-
-    public ?QueryExecutorInterface $queryExecutor = null;
 
     protected ?string $storageName  = null;
 
@@ -126,11 +120,4 @@ class SqlStorageMock implements SqlStorageInterface, QueryExecutorResolverInterf
 
     #[\Override]
     public function disconnect(): void {}
-
-    #[\Override] public function resolveQueryExecutor(
-        BasicQueryInterface $basicQuery,
-        ?EntityInterface     $entity = null
-    ): ?QueryExecutorInterface {
-        return $this->queryExecutor;
-    }
 }
